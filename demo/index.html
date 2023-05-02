@@ -1,29 +1,88 @@
-<!doctype html>
-<html lang="en-GB">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio Player</title>
   <style>
-    body {
-      background: #fafafa;
-    }
+      .audio-player {
+          display: inline-block;
+          width: 50px;
+          height: 20px;
+          padding: 5px;
+          border: 1px solid var(--border-color, black);
+          background-color: var(--background-color, white);
+          color: var(--text-color, black);
+          font-size: var(--font-size, 16px);
+          position: relative;
+          border-radius: 5px;
+          transition: background-color 0.3s ease;
+          text-align: center;
+      }
+
+      .audio-player:hover {
+          background-color: var(--hover-color, lightgray);
+      }
+
+      .play-pause .pause {
+          display: none;
+      }
+
+      .progress-container {
+          width: 100%;
+          height: 10px;
+          background-color: #ddd;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+      }
+
+      .progress {
+          height: 100%;
+          background-color: #4caf50;
+          width: 0;
+      }
   </style>
 </head>
 <body>
-  <div id="demo"></div>
+  <p>The medieval period, also known as the Middle Ages, spanned from the 5th to the late 15th century. It was a fascinating time of knights, castles, and kings. <span class="audio-player">
+      <span class="play-pause" tabindex="0">
+          <span class="play">►</span>
+          <span class="pause">❚❚</span>
+      </span>
+      <audio id="audio" src="audiofile.mp3"></audio>
+      <div class="progress-container">
+          <div class="progress"></div>
+      </div>
+  </span> Medieval society was a vast hierarchy with the king at the top and the peasants at the bottom. The feudal system was a way of organising society into different groups based on their roles.</p>
 
-  <script type="module">
-    import { html, render } from 'lit';
-    import '../inline-audiofinal.js';
+  <script>
+      const audio = document.getElementById('audio');
+      const playPause = document.querySelector('.play-pause');
+      const progress = document.querySelector('.progress');
 
-    const title = 'Hello owc World!';
-    render(
-      html`
-        <inline-audiofinal .title=${title}>
-          some light-dom
-        </inline-audiofinal>
-      `,
-      document.querySelector('#demo')
-    );
+      playPause.addEventListener('click', () => {
+          if (audio.paused) {
+              audio.play();
+              playPause.querySelector('.play').style.display = 'none';
+              playPause.querySelector('.pause').style.display = 'inline-block';
+          } else {
+              audio.pause();
+              playPause.querySelector('.play').style.display = 'inline-block';
+              playPause.querySelector('.pause').style.display = 'none';
+          }
+      });
+
+      audio.addEventListener('timeupdate', () => {
+          const progressPercentage = (audio.currentTime / audio.duration) * 100;
+          progress.style.width = progressPercentage + '%';
+      });
+
+      playPause.addEventListener('keydown', (event) => {
+          if (event.keyCode === 13) {
+              playPause.click();
+          }
+      });
   </script>
 </body>
 </html>
