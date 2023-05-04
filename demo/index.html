@@ -49,6 +49,7 @@
             height: 100%;
             background-color: #4caf50;
             width: 0;
+            transition: width 0.1s linear;
         }
 
         .play-pause {
@@ -71,14 +72,14 @@
           <span class="play">►</span>
           <span class="pause">❚❚</span>
       </span>
-      <audio id="audio1" src="https://raw.githubusercontent.com/nboyless/inline_audiofinal/master/audio1.mp3"></audio>
+      <audio id="audio1" src="audio1.mp3"></audio>
       <div class="progress-container">
           <div class="progress"></div>
       </div>
   </span> Knights, castles, and crusades also became emblematic of this time, capturing the imaginations of people for centuries to come. </p>
 
   <script>
-    const audio1 = document.getElementById('audio1');
+  const audio1 = document.getElementById('audio1');
 const playPauseButtons = document.querySelectorAll('.play-pause');
 const progress = document.querySelectorAll('.progress');
 
