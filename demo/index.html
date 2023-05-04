@@ -5,13 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Audio Player</title>
   <style>
+      body {
+          line-height: 2;
+      }
+      
+      p {
+          margin-bottom: 1em;
+      }
+
       .audio-player {
           display: inline-block;
-          width: 50px;
+          width: 75px;
           height: 20px;
           padding: 5px;
           border: 1px solid var(--border-color, black);
-          background-color: var(--background-color, white);
+          background-color: lightblue;
           color: var(--text-color, black);
           font-size: var(--font-size, 16px);
           position: relative;
@@ -21,7 +29,7 @@
       }
 
       .audio-player:hover {
-          background-color: var(--hover-color, lightgray);
+          background-color: var(--hover-color, #56C3E8);
       }
 
       .play-pause .pause {
@@ -45,44 +53,51 @@
   </style>
 </head>
 <body>
-  <p>The medieval period, also known as the Middle Ages, spanned from the 5th to the late 15th century. It was a fascinating time of knights, castles, and kings. <span class="audio-player">
+  <p>The medieval period, also known as the Middle Ages, was a fascinating time of history that spanned from the 5th to the late 15th century. During this time, Europe underwent significant cultural, social, and economic changes. Feudalism, the rise of Christianity, and the establishment of powerful monarchies were just a few of the defining features of this era that shaped the course of European history for centuries to come. <span class="audio-player">
       <span class="play-pause" tabindex="0">
           <span class="play">►</span>
           <span class="pause">❚❚</span>
       </span>
-      <audio id="audio" src="audiofile.mp3"></audio>
+      <audio id="audio1" src="audio/my-audio-file-1.mp3"></audio>
       <div class="progress-container">
           <div class="progress"></div>
       </div>
-  </span> Medieval society was a vast hierarchy with the king at the top and the peasants at the bottom. The feudal system was a way of organising society into different groups based on their roles.</p>
+  </span> Knights, castles, and crusades also became emblematic of this time, capturing the imaginations of people for centuries to come. </p>
 
   <script>
-      const audio = document.getElementById('audio');
-      const playPause = document.querySelector('.play-pause');
-      const progress = document.querySelector('.progress');
+    const audio1 = document.getElementById('audio1');
+const playPauseButtons = document.querySelectorAll('.play-pause');
+const progress = document.querySelectorAll('.progress');
 
-      playPause.addEventListener('click', () => {
-          if (audio.paused) {
-              audio.play();
-              playPause.querySelector('.play').style.display = 'none';
-              playPause.querySelector('.pause').style.display = 'inline-block';
-          } else {
-              audio.pause();
-              playPause.querySelector('.play').style.display = 'inline-block';
-              playPause.querySelector('.pause').style.display = 'none';
-          }
-      });
+playPauseButtons.forEach((playPause) => {
+  playPause.addEventListener('click', () => {
+    togglePlayPause(playPause);
+  });
+  playPause.addEventListener('keydown', (event) => {
+    if (event.keyCode === 32) {
+      togglePlayPause(playPause);
+      event.preventDefault();
+    }
+  });
+});
 
-      audio.addEventListener('timeupdate', () => {
-          const progressPercentage = (audio.currentTime / audio.duration) * 100;
-          progress.style.width = progressPercentage + '%';
-      });
+function togglePlayPause(playPause) {
+  const audio = playPause.parentElement.querySelector('audio');
+  if (audio.paused) {
+    audio.play();
+    playPause.querySelector('.play').style.display = 'none';
+    playPause.querySelector('.pause').style.display = 'inline-block';
+  } else {
+    audio.pause();
+    playPause.querySelector('.play').style.display = 'inline-block';
+    playPause.querySelector('.pause').style.display = 'none';
+  }
+}
 
-      playPause.addEventListener('keydown', (event) => {
-          if (event.keyCode === 13) {
-              playPause.click();
-          }
-      });
-  </script>
+audio1.addEventListener('timeupdate', () => {
+    const progressPercentage = (audio1.currentTime / audio1.duration) * 100;
+    progress[0].style.width = progressPercentage + '%';
+});
+</script>
 </body>
 </html>
